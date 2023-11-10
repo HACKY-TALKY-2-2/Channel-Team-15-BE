@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
@@ -37,7 +38,6 @@ public class SecurityConfig {
                         authorizeRequests
                                 .anyRequest().hasRole("USER")
                 );
-
         return httpSecurity.build();
     }
 
@@ -45,7 +45,8 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> {
             web.ignoring()
-                    .requestMatchers("/user/signup", "/user/login");
+                    .requestMatchers("/user/signup", "/user/login"
+                    ,"/mission/add");
         };
     }
 }

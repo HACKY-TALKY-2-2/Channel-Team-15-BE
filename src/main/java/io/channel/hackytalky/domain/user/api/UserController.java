@@ -1,19 +1,21 @@
 package io.channel.hackytalky.domain.user.api;
 
-import io.channel.hackytalky.domain.doongdoong.dto.ClearMissionRequestDTO;
 import io.channel.hackytalky.domain.doongdoong.dto.ClearMissionResponseDTO;
 import io.channel.hackytalky.domain.user.dto.LoginRequestDTO;
 import io.channel.hackytalky.domain.user.dto.SignupRequestDTO;
 import io.channel.hackytalky.domain.user.service.UserService;
 import io.channel.hackytalky.global.exception.BaseException;
 import io.channel.hackytalky.global.response.BaseResponse;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
@@ -82,16 +84,24 @@ public class UserController {
         }
     }
 
-    @PostMapping("/clearMission")
-    public BaseResponse<?> gainExperiment(@RequestBody ClearMissionRequestDTO clearMissionRequestDTO, BindingResult result, HttpServletRequest request) {
-        if (result.hasErrors()) {
-            String message = result.getFieldError().getDefaultMessage();
-            return new BaseResponse<>(false, 400, message);
-        }
-
+    @PostMapping(value = "/clearMission/{missionId}")
+    public BaseResponse<?> gainExperiment(@PathVariable Long missionId,
+                                          HttpServletRequest request) {
         try {
-            Long missionId = clearMissionRequestDTO.getMissionId();
-            ClearMissionResponseDTO resultDTO = userService.clearMission(request, missionId);
+            ClearMissionResponseDTO resultDTO = userService.clearMission(request, missionId, null);
+
+            return new BaseResponse<>(resultDTO);
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    @PostMapping(value = "/clearImageMission/{missionId}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public BaseResponse<?> gainExperimentWithImage(@PathVariable Long missionId,
+                                          @Nullable @RequestPart MultipartFile imageFile,
+                                          HttpServletRequest request) {
+        try {
+            ClearMissionResponseDTO resultDTO = userService.clearMission(request, missionId, imageFile);
 
             return new BaseResponse<>(resultDTO);
         } catch (BaseException e) {

@@ -19,9 +19,13 @@ public class Mission {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "require_image")
+    private Boolean requireImage;
+
     @Builder
-    public Mission(Long experiment, String content) {
+    public Mission(long experiment, String content, boolean requireImage) {
         this.experiment = experiment;
         this.content = content;
+        this.requireImage = requireImage;
     }
 }

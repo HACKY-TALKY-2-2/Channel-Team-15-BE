@@ -20,6 +20,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
@@ -123,10 +124,10 @@ public class UserService {
         return DoongdoongInfoDTO.of(user.getDoongdoong());
     }
 
-    public ClearMissionResponseDTO clearMission(HttpServletRequest request, Long experiment) {
+    public ClearMissionResponseDTO clearMission(HttpServletRequest request, Long missionId, MultipartFile imageFile) {
         User user = getUser(request);
 
-        return doongdoongService.clearMission(user.getDoongdoong(), experiment);
+        return doongdoongService.clearMission(user.getDoongdoong(), missionId, imageFile);
     }
 
     private User getUser(HttpServletRequest request) throws BaseException {

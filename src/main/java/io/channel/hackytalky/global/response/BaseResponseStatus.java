@@ -21,6 +21,8 @@ public enum BaseResponseStatus {
 
     MISSION_NOT_EXIST(false, HttpStatus.NOT_FOUND.value(), "존재하지 않는 미션입니다."),
 
+    NOT_IMAGE_FORMAT(false, HttpStatus.BAD_REQUEST.value(), "파일 형식이 잘못되었습니다."),
+
     EXPIRED_JWT_TOKEN(false, HttpStatus.UNAUTHORIZED.value(), "만료된 토큰입니다"),
     INVALID_JWT_TOKEN(false, HttpStatus.NOT_ACCEPTABLE.value(), "유효하지 않은 토큰입니다."),
     NO_JWT_TOKEN(false, HttpStatus.NOT_ACCEPTABLE.value(), "토큰이 존재하지 않습니다."),

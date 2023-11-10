@@ -25,10 +25,9 @@ public class Doongdoong {
     private User owner;
 
     @Builder
-    public Doongdoong(Long id, Long level, User owner, Long experiment) {
-        this.id = id;
+    public Doongdoong(long level, long experiment, User owner) {
         this.level = level;
-        this.owner = owner;
         this.experiment = experiment;
+        this.owner = owner;
     }
 }
