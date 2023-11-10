@@ -14,20 +14,21 @@ public class Doongdoong {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private User owner;
-
     @Column(nullable = false)
     private Long level;
 
     @Column(nullable = false)
     private Long experiment;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private User owner;
+
     @Builder
-    public Doongdoong(Long id, User owner, Long level, Long experiment) {
+    public Doongdoong(Long id, Long level, User owner, Long experiment) {
         this.id = id;
-        this.owner = owner;
         this.level = level;
+        this.owner = owner;
         this.experiment = experiment;
     }
 }

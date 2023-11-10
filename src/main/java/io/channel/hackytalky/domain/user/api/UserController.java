@@ -1,5 +1,7 @@
 package io.channel.hackytalky.domain.user.api;
 
+import io.channel.hackytalky.domain.doongdoong.dto.ClearMissionRequestDTO;
+import io.channel.hackytalky.domain.doongdoong.dto.ClearMissionResponseDTO;
 import io.channel.hackytalky.domain.user.dto.LoginRequestDTO;
 import io.channel.hackytalky.domain.user.dto.SignupRequestDTO;
 import io.channel.hackytalky.domain.user.service.UserService;
@@ -67,6 +69,32 @@ public class UserController {
             userService.withDraw(request, password);
             return new BaseResponse<>("SUCCESSFULLY WITHDREW");
         } catch(BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    @GetMapping("/doongdoongInfo")
+    public BaseResponse<?> getDoongdoongInformation(HttpServletRequest request) {
+        try {
+            return new BaseResponse<>(userService.getDoongdoongInformation(request));
+        } catch(BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    @PostMapping("/clearMission")
+    public BaseResponse<?> gainExperiment(@RequestBody ClearMissionRequestDTO clearMissionRequestDTO, BindingResult result, HttpServletRequest request) {
+        if (result.hasErrors()) {
+            String message = result.getFieldError().getDefaultMessage();
+            return new BaseResponse<>(false, 400, message);
+        }
+
+        try {
+            Long missionId = clearMissionRequestDTO.getMissionId();
+            ClearMissionResponseDTO resultDTO = userService.clearMission(request, missionId);
+
+            return new BaseResponse<>(resultDTO);
+        } catch (BaseException e) {
             return new BaseResponse<>(e.getStatus());
         }
     }

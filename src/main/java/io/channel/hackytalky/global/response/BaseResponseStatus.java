@@ -17,18 +17,9 @@ public enum BaseResponseStatus {
     EMAIL_EXIST(false, HttpStatus.CONFLICT.value(), "해당 이메일로 가입한 회원이 존재합니다."),
     WRONG_PASSWORD(false, HttpStatus.BAD_REQUEST.value(), "잘못된 비밀번호 입니다."),
     USER_NOT_EXIST(false, HttpStatus.NOT_FOUND.value(), "존재하지 않는 회원입니다"),
-    NOT_ENROLLED(false, HttpStatus.NOT_FOUND.value(), "등록되지 않은 일정입니다"),
-    NOT_BOOKED(false, HttpStatus.NOT_FOUND.value(), "등록되지 않은 일정입니다"),
-    NOT_SUBSCRIBED(false, HttpStatus.NOT_FOUND.value(), "등록되지 않은 카테고리입니다"),
-    ALREADY_ENROLLED(false, HttpStatus.BAD_REQUEST.value(), "이미 신청한 일정입니다."),
-    ALREADY_BOOKED(false, HttpStatus.BAD_REQUEST.value(), "이미 관심등록한 일정입니다."),
-    ALREADY_SUBSCRIBED(false, HttpStatus.BAD_REQUEST.value(), "이미 관심등록한 카테고리입니다."),
+    ALREADY_ENROLLED(false, HttpStatus.BAD_REQUEST.value(), "이미 완료한 미션입니다."),
 
-    SCHEDULE_NOT_EXIST(false, HttpStatus.NOT_FOUND.value(), "존재하지 않는 일정입니다."),
-    SCHEDULE_EXIST(false, HttpStatus.CONFLICT.value(), "해당 일정이 존재합니다."),
-
-    CATEGORY_NOT_EXIST(false, HttpStatus.NOT_FOUND.value(), "존재하지 않는 카테고리입니다"),
-    CATEGORY_EXIST(false, HttpStatus.CONFLICT.value(), "해당 카테고리가 존재합니다."),
+    MISSION_NOT_EXIST(false, HttpStatus.NOT_FOUND.value(), "존재하지 않는 미션입니다."),
 
     EXPIRED_JWT_TOKEN(false, HttpStatus.UNAUTHORIZED.value(), "만료된 토큰입니다"),
     INVALID_JWT_TOKEN(false, HttpStatus.NOT_ACCEPTABLE.value(), "유효하지 않은 토큰입니다."),

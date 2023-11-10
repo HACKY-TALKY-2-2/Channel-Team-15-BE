@@ -18,6 +18,14 @@ public class DoongdoongInfoDTO {
     private Long experiment;
 
     private String ownerName;
+
+    public static DoongdoongInfoDTO of(Doongdoong doongdoong) {
+        return new DoongdoongInfoDTO(
+                doongdoong.getId(),
+                doongdoong.getLevel(),
+                doongdoong.getExperiment(),
+                doongdoong.getOwner().getName());
+    }
 }
 
 

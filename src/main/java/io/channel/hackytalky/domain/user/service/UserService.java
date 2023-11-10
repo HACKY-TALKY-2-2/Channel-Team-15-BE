@@ -1,6 +1,10 @@
 package io.channel.hackytalky.domain.user.service;
 
+import io.channel.hackytalky.domain.doongdoong.dto.ClearMissionResponseDTO;
+import io.channel.hackytalky.domain.doongdoong.dto.DoongdoongInfoDTO;
 import io.channel.hackytalky.domain.doongdoong.entity.Doongdoong;
+import io.channel.hackytalky.domain.doongdoong.repository.DoongdoongRepository;
+import io.channel.hackytalky.domain.doongdoong.service.DoongdoongService;
 import io.channel.hackytalky.domain.user.dto.LoginRequestDTO;
 import io.channel.hackytalky.domain.user.dto.SignupRequestDTO;
 import io.channel.hackytalky.domain.user.entity.User;
@@ -31,6 +35,8 @@ import static io.channel.hackytalky.global.response.BaseResponseStatus.*;
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
+    private final DoongdoongRepository doongdoongRepository;
+    private final DoongdoongService doongdoongService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtUtils jwtUtils;
     private final RedisTemplate<String, String> redisTemplate;
@@ -47,14 +53,15 @@ public class UserService {
                 .password(bCryptPasswordEncoder.encode(signupRequestDTO.getPassword()))
                 .build();
 
-        Doongdoong doongdoong = Doongdoong.builder()
-                .owner(userEntity)
+        Doongdoong doongdoongEntity = Doongdoong.builder()
                 .level((long)0)
                 .experiment((long)0)
+                .owner(userEntity)
                 .build();
 
         try {
             userRepository.save(userEntity);
+            doongdoongRepository.save(doongdoongEntity);
         } catch (Exception e) {
             throw new BaseException(DATABASE_INSERT_ERROR);
         }
@@ -100,11 +107,26 @@ public class UserService {
 
         logout(request);
 
+        Doongdoong doongdoong = user.getDoongdoong();
+
         try {
+            doongdoongRepository.delete(doongdoong);
             userRepository.delete(user);
         } catch (BaseException e) {
             throw new BaseException(DATABASE_DELETE_ERROR);
         }
+    }
+
+    public DoongdoongInfoDTO getDoongdoongInformation(HttpServletRequest request) {
+        User user = getUser(request);
+
+        return DoongdoongInfoDTO.of(user.getDoongdoong());
+    }
+
+    public ClearMissionResponseDTO clearMission(HttpServletRequest request, Long experiment) {
+        User user = getUser(request);
+
+        return doongdoongService.clearMission(user.getDoongdoong(), experiment);
     }
 
     private User getUser(HttpServletRequest request) throws BaseException {
