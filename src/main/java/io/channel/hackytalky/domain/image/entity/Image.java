@@ -1,7 +1,10 @@
 package io.channel.hackytalky.domain.image.entity;
 
+import io.channel.hackytalky.domain.mission.entity.ClearedMission;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,6 +20,9 @@ public class Image {
     @Lob
     @Column(name = "image_file", columnDefinition = "MEDIUMBLOB")
     private byte[] imageFile;
+
+    @OneToMany(mappedBy = "image")
+    private List<ClearedMission> clearedMissions;
 
     @Builder
     public Image(long id, byte[] imageFile) {

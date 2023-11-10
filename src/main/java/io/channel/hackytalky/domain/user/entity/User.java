@@ -1,8 +1,11 @@
 package io.channel.hackytalky.domain.user.entity;
 
 import io.channel.hackytalky.domain.doongdoong.entity.Doongdoong;
+import io.channel.hackytalky.domain.mission.entity.ClearedMission;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,6 +29,9 @@ public class User {
     @OneToOne
     @JoinColumn(name = "id")
     private Doongdoong doongdoong;
+
+    @OneToMany(mappedBy = "user")
+    private List<ClearedMission> clearedMission;
 
     @Builder
     public User(String name, String email, String password) {

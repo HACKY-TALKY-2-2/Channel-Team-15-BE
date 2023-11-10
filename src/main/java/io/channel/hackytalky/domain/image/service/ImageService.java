@@ -19,7 +19,7 @@ import static io.channel.hackytalky.global.response.BaseResponseStatus.NOT_IMAGE
 public class ImageService {
     private final ImageRepository imageRepository;
 
-    public void saveImage(MultipartFile imageFile) {
+    public Image saveImage(MultipartFile imageFile) {
         if(imageFile != null) {
             byte[] imageBytes;
 
@@ -35,9 +35,12 @@ public class ImageService {
                         .build();
 
                 imageRepository.save(image);
+                return image;
             } catch (Exception e) {
                 throw new BaseException(DATABASE_INSERT_ERROR);
             }
         }
+
+        return null;
     }
 }

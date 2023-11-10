@@ -5,6 +5,9 @@ import io.channel.hackytalky.domain.doongdoong.dto.DoongdoongInfoDTO;
 import io.channel.hackytalky.domain.doongdoong.entity.Doongdoong;
 import io.channel.hackytalky.domain.doongdoong.repository.DoongdoongRepository;
 import io.channel.hackytalky.domain.doongdoong.service.DoongdoongService;
+import io.channel.hackytalky.domain.mission.dto.ClearedMissionDTO;
+import io.channel.hackytalky.domain.mission.entity.ClearedMission;
+import io.channel.hackytalky.domain.mission.repository.ClearedMissionRepository;
 import io.channel.hackytalky.domain.user.dto.LoginRequestDTO;
 import io.channel.hackytalky.domain.user.dto.SignupRequestDTO;
 import io.channel.hackytalky.domain.user.entity.User;
@@ -24,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Map;
 
 import static io.channel.hackytalky.global.properties.JwtProperties.*;
@@ -37,6 +41,7 @@ import static io.channel.hackytalky.global.response.BaseResponseStatus.*;
 public class UserService {
     private final UserRepository userRepository;
     private final DoongdoongRepository doongdoongRepository;
+    private final ClearedMissionRepository clearedMissionRepository;
     private final DoongdoongService doongdoongService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtUtils jwtUtils;
@@ -127,7 +132,13 @@ public class UserService {
     public ClearMissionResponseDTO clearMission(HttpServletRequest request, Long missionId, MultipartFile imageFile) {
         User user = getUser(request);
 
-        return doongdoongService.clearMission(user.getDoongdoong(), missionId, imageFile);
+        return doongdoongService.clearMission(user, missionId, imageFile);
+    }
+
+    public List<ClearedMissionDTO> getClearedMissions(HttpServletRequest request) {
+        User user = getUser(request);
+
+        return clearedMissionRepository.getClearedMissionsByUser(user).stream().map(ClearedMissionDTO::of).toList();
     }
 
     private User getUser(HttpServletRequest request) throws BaseException {

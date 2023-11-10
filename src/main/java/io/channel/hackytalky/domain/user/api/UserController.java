@@ -108,4 +108,13 @@ public class UserController {
             return new BaseResponse<>(e.getStatus());
         }
     }
+
+    @GetMapping(value = "/clearedMissions")
+    public BaseResponse<?> getClearedMissions(HttpServletRequest request) {
+        try {
+            return new BaseResponse<>(userService.getClearedMissions(request));
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
 }

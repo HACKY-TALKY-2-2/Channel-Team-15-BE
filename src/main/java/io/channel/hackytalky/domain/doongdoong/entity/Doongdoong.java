@@ -20,7 +20,7 @@ public class Doongdoong {
     @Column(nullable = false)
     private Long experiment;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner;
 
