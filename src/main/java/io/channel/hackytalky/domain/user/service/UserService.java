@@ -55,8 +55,8 @@ public class UserService {
                 .build();
 
         Doongdoong doongdoongEntity = Doongdoong.builder()
-                .level((long)0)
-                .experiment((long)0)
+                .level(0)
+                .experiment(0)
                 .owner(userEntity)
                 .build();
 

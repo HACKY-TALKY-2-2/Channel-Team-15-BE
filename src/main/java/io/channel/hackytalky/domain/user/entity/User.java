@@ -3,7 +3,6 @@ package io.channel.hackytalky.domain.user.entity;
 import io.channel.hackytalky.domain.doongdoong.entity.Doongdoong;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 @Getter
 @Setter

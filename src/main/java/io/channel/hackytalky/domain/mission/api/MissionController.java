@@ -5,7 +5,6 @@ import io.channel.hackytalky.domain.mission.dto.MissionAddDTO;
 import io.channel.hackytalky.domain.mission.service.MissionService;
 import io.channel.hackytalky.global.exception.BaseException;
 import io.channel.hackytalky.global.response.BaseResponse;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
