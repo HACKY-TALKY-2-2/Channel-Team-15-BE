@@ -96,10 +96,10 @@ public class UserController {
         }
     }
 
-    @PostMapping(value = "/clearImageMission/{missionId}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PostMapping(value = "/clearImageMission/{missionId}")
     public BaseResponse<?> gainExperimentWithImage(@PathVariable Long missionId,
-                                          @Nullable @RequestPart MultipartFile imageFile,
-                                          HttpServletRequest request) {
+                                                   @RequestParam("imageFile") MultipartFile imageFile,
+                                                   HttpServletRequest request) {
         try {
             ClearMissionResponseDTO resultDTO = userService.clearMission(request, missionId, imageFile);
 
